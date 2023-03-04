@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://cch8raclxj3go"]
+
+[ext_resource type="Script" path="res://Global/spawn_unit.gd" id="1_1aqps"]
+[ext_resource type="Texture2D" uid="uid://c8b1mobskyhll" path="res://assets/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="1_2rpht"]
+[ext_resource type="Texture2D" uid="uid://ct3pddq720amm" path="res://assets/MiniWorldSprites/Buildings/Wood/Chapels.png" id="3_5s6eo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n0jnr"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.698039, 0, 1)
+border_blend = true
+anti_aliasing = false
+
+[node name="SpawnUnit" type="Node2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_1aqps")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 57.0
+offset_bottom = 57.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_n0jnr")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel2" type="Panel" parent="."]
+offset_left = 56.0
+offset_right = 160.0
+offset_bottom = 57.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_n0jnr")
+metadata/_edit_use_anchors_ = true
+
+[node name="WorkerButton" type="Button" parent="."]
+offset_left = 60.0
+offset_top = 4.0
+offset_right = 74.0
+offset_bottom = 18.0
+flat = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2d" type="Sprite2D" parent="."]
+position = Vector2(67, 11)
+texture = ExtResource("1_2rpht")
+hframes = 5
+vframes = 12
+
+[node name="Chapels" type="Sprite2D" parent="."]
+position = Vector2(11.5, 11.5)
+texture = ExtResource("3_5s6eo")
+hframes = 3
+vframes = 2
+frame = 4
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="pressed" from="WorkerButton" to="." method="_on_worker_button_pressed"]

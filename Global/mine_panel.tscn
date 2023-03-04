@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://c84qrwv25ilq4"]
+
+[ext_resource type="Script" path="res://Global/mine_panel.gd" id="1_8g0hy"]
+[ext_resource type="Texture2D" uid="uid://c8b1mobskyhll" path="res://assets/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="2_8t4an"]
+[ext_resource type="Texture2D" uid="uid://ct3pddq720amm" path="res://assets/MiniWorldSprites/Buildings/Wood/Chapels.png" id="3_ynm8g"]
+[ext_resource type="Texture2D" uid="uid://ct30en78u7bbq" path="res://assets/MiniWorldSprites/User Interface/UiIcons.png" id="4_xass3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_um7p1"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.698039, 0, 1)
+border_blend = true
+anti_aliasing = false
+
+[node name="MinePanel" type="Node2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_8g0hy")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 57.0
+offset_bottom = 57.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_um7p1")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel2" type="Panel" parent="."]
+offset_left = 56.0
+offset_right = 160.0
+offset_bottom = 57.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_um7p1")
+metadata/_edit_use_anchors_ = true
+
+[node name="WorkerButton" type="Button" parent="."]
+offset_left = 60.0
+offset_top = 4.0
+offset_right = 74.0
+offset_bottom = 18.0
+flat = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2d" type="Sprite2D" parent="WorkerButton"]
+position = Vector2(7, 7)
+texture = ExtResource("2_8t4an")
+hframes = 5
+vframes = 12
+
+[node name="Chapels" type="Sprite2D" parent="."]
+position = Vector2(11.5, 11.5)
+texture = ExtResource("3_ynm8g")
+hframes = 3
+vframes = 2
+frame = 4
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="WorkerButton2" type="Button" parent="."]
+offset_left = 77.0
+offset_top = 4.0
+offset_right = 91.0
+offset_bottom = 18.0
+flat = true
+metadata/_edit_use_anchors_ = true
+
+[node name="UiIcons" type="Sprite2D" parent="WorkerButton2"]
+position = Vector2(24.5, 42)
+texture = ExtResource("4_xass3")
+hframes = 4
+vframes = 12
+frame = 42
+
+[connection signal="pressed" from="WorkerButton" to="." method="_on_worker_button_pressed"]
+[connection signal="pressed" from="WorkerButton2" to="." method="_on_worker_button_pressed"]

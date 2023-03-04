@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b30yylrhbkr3u"]
+
+[ext_resource type="Texture2D" uid="uid://b87h58sjicneh" path="res://assets/MiniWorldSprites/AllAssetsPreview.png" id="1_jqxdq"]
+[ext_resource type="Texture2D" uid="uid://ct172i236ct85" path="res://assets/MiniWorldSprites/ColoredBuildingsPreview.png" id="2_yxsx2"]
+
+[node name="Node2d" type="Node2D"]
+
+[node name="AllAssetsPreview" type="Sprite2D" parent="."]
+position = Vector2(323, 170)
+texture = ExtResource("1_jqxdq")
+
+[node name="ColoredBuildingsPreview" type="Sprite2D" parent="."]
+position = Vector2(-604, 268)
+texture = ExtResource("2_yxsx2")

@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7bk0v4wes310"]
+
+[ext_resource type="Script" path="res://buildings/mine.gd" id="1_h37lf"]
+[ext_resource type="Texture2D" uid="uid://dxl84vly4axkv" path="res://assets/MiniWorldSprites/Buildings/Wood/Resources.png" id="1_rwmn2"]
+[ext_resource type="Script" path="res://buildings/Selected.gd" id="3_i73b7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3qfl"]
+size = Vector2(14, 8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vlmh6"]
+
+[node name="Mine" type="StaticBody2D"]
+y_sort_enabled = true
+scale = Vector2(2, 2)
+input_pickable = true
+script = ExtResource("1_h37lf")
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_w3qfl")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="Resources" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("1_rwmn2")
+hframes = 3
+vframes = 5
+frame = 12
+
+[node name="Selected" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.313726)
+z_index = 1
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vlmh6")
+script = ExtResource("3_i73b7")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mine_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mine_mouse_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://cp7iilt2q13yn"]
+
+[ext_resource type="Texture2D" uid="uid://ct3pddq720amm" path="res://assets/MiniWorldSprites/Buildings/Wood/Chapels.png" id="1_5d2rd"]
+[ext_resource type="Script" path="res://buildings/building.gd" id="1_5pq6t"]
+[ext_resource type="Script" path="res://buildings/Selected.gd" id="3_koons"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qddmx"]
+size = Vector2(16, 7.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgqya"]
+
+[node name="Building" type="StaticBody2D"]
+y_sort_enabled = true
+scale = Vector2(2, 2)
+input_pickable = true
+script = ExtResource("1_5pq6t")
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_qddmx")
+
+[node name="Chapels" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -8)
+texture = ExtResource("1_5d2rd")
+hframes = 3
+vframes = 2
+frame = 4
+
+[node name="Selected" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.313726)
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_hgqya")
+script = ExtResource("3_koons")
+
+[connection signal="mouse_entered" from="." to="." method="_on_building_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_building_mouse_exited"]

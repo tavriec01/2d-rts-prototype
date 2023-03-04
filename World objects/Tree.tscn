@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://dat0deipcwyih"]
+
+[ext_resource type="Texture2D" uid="uid://dnma17oohcqo" path="res://assets/MiniWorldSprites/Nature/Trees.png" id="1_0g0h7"]
+[ext_resource type="Script" path="res://World objects/Tree.gd" id="1_vcnkm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psh65"]
+size = Vector2(6, 3.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_do6do"]
+radius = 5.0
+height = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r68or"]
+bg_color = Color(1, 0.121569, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fn7w6"]
+bg_color = Color(0, 0.878431, 0, 1)
+
+[node name="Tree" type="StaticBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_vcnkm")
+
+[node name="Tree" type="Sprite2D" parent="."]
+position = Vector2(1, -2)
+texture = ExtResource("1_0g0h7")
+hframes = 4
+frame = 1
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3.25)
+shape = SubResource("RectangleShape2D_psh65")
+
+[node name="chopArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="chopArea"]
+position = Vector2(0, 3.5)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_do6do")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -6.0
+offset_top = -11.0
+offset_right = 6.0
+offset_bottom = -10.0
+theme_override_styles/background = SubResource("StyleBoxFlat_r68or")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fn7w6")
+value = 50.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[connection signal="body_entered" from="chopArea" to="." method="_on_chop_area_body_entered"]
+[connection signal="body_exited" from="chopArea" to="." method="_on_chop_area_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
