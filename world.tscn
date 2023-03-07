@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d0bxjdvvq6mmg"]
+[gd_scene load_steps=13 format=3 uid="uid://d0bxjdvvq6mmg"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_3kwj2"]
 [ext_resource type="PackedScene" uid="uid://bj0ktjgar201n" path="res://UI/UI.tscn" id="1_8fdnv"]
@@ -21,9 +21,6 @@ texture = ExtResource("10_j0emy")
 
 [sub_resource type="TileSet" id="TileSet_7wswj"]
 sources/0 = SubResource("TileSetAtlasSource_1emgv")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpyp0"]
-size = Vector2(118, 28)
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -55,126 +52,166 @@ y_sort_enabled = true
 
 [node name="Unit22" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(336, 153)
+unit_owner = 0
 
 [node name="Unit23" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(339, 206)
+unit_owner = 0
 
 [node name="Unit24" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(316, 219)
+unit_owner = 0
 
 [node name="Unit25" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(277, 194)
+unit_owner = 0
 
 [node name="Unit26" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(240, 164)
+unit_owner = 0
 
 [node name="Unit27" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(241, 119)
+unit_owner = 0
 
 [node name="Unit28" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(298, 117)
+unit_owner = 0
 
 [node name="Unit29" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(345, 117)
+unit_owner = 0
 
 [node name="Unit30" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(383, 135)
+unit_owner = 0
 
 [node name="Unit31" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(404, 160)
+unit_owner = 0
 
 [node name="Unit32" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(438, 182)
+unit_owner = 0
 
 [node name="Unit33" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(475, 181)
 
 [node name="Unit34" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(492, 151)
+unit_owner = 0
 
 [node name="Unit35" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(491, 130)
+unit_owner = 0
 
 [node name="Unit36" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(482, 107)
+unit_owner = 0
 
 [node name="Unit37" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(454, 84)
+unit_owner = 0
 
 [node name="Unit38" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(416, 91)
+unit_owner = 0
 
 [node name="Unit39" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(404, 106)
+unit_owner = 0
 
 [node name="Unit40" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(409, 129)
+unit_owner = 0
 
 [node name="Unit41" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(428, 152)
+unit_owner = 0
 
 [node name="Unit42" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(462, 162)
+unit_owner = 0
 
 [node name="Unit43" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(461, 202)
+unit_owner = 0
 
 [node name="Unit44" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(437, 229)
+unit_owner = 0
 
 [node name="Unit45" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(409, 230)
+unit_owner = 0
 
 [node name="Unit46" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(398, 200)
+unit_owner = 0
 
 [node name="Unit47" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(373, 221)
+unit_owner = 0
 
 [node name="Unit48" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(358, 248)
+unit_owner = 0
 
 [node name="Unit49" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(317, 253)
+unit_owner = 0
 
 [node name="Unit50" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(289, 244)
+unit_owner = 0
 
 [node name="Unit51" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(267, 229)
+unit_owner = 0
 
 [node name="Unit52" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(239, 205)
+unit_owner = 0
 
 [node name="Unit53" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(217, 182)
+unit_owner = 0
 
 [node name="Unit54" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(207, 161)
+unit_owner = 0
 
 [node name="Unit55" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(224, 144)
+unit_owner = 0
 
 [node name="Unit56" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(253, 141)
+unit_owner = 0
 
 [node name="Unit57" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(275, 114)
+unit_owner = 0
 
 [node name="Unit58" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(257, 91)
+unit_owner = 0
 
 [node name="Unit59" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(221, 104)
+unit_owner = 0
 
 [node name="Unit60" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(207, 134)
+unit_owner = 0
 
 [node name="Unit61" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(185, 148)
+unit_owner = 0
 
 [node name="Unit62" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
 position = Vector2(160, 171)
+unit_owner = 0
 
 [node name="Objects" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -196,15 +233,6 @@ position = Vector2(436, 121)
 
 [node name="Tree2" parent="Objects" instance=ExtResource("5_o4sli")]
 position = Vector2(69, 82)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Objects"]
-position = Vector2(535, 73)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/StaticBody2D"]
-position = Vector2(22, -4)
-rotation = 0.815069
-skew = 0.593412
-shape = SubResource("RectangleShape2D_bpyp0")
 
 [node name="Buildings" type="Node2D" parent="."]
 y_sort_enabled = true

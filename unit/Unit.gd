@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Unit
 
 @export var selected = false
+@export var unit_owner = 0
 @onready var box = get_node("Box")
 @onready var anim = get_node("AnimationPlayer")
 @onready var line = get_tree().get_root().get_node("World/Drawing/Line2D")
@@ -13,6 +14,7 @@ class_name Unit
 @onready var rayNW = get_node("RayNW")
 @onready var rayE = get_node("RayE")
 @onready var rayW = get_node("RayW")
+@onready var stopTimer = get_node("StopTimer")
 
 var _timer = 0
 
@@ -27,15 +29,27 @@ var targetFinal
 var last_direction = Vector2(0, 1)
 var norm_direction
 
+#----
+var slide_count = 0
+var move_treshold = .3
+var last_position = Vector2.ZERO
+var last_distance_to_target = 0
+
 var state
 var sub_state
+
+# materials
+var enemy_material = load("res://Materials/unit_shader_material.tres")
 
 signal right_clicked
 
 func _ready():
-	set_state(state)
+	#set_state(state)
+	if unit_owner == 1:
+		material = enemy_material
 	set_selected(selected)
 	add_to_group("units", true)
+	
 
 func set_state(s, sub=""):
 	_timer = 0
@@ -59,13 +73,16 @@ func _input(event):
 func _physics_process(delta):
 	_timer += delta
 	
-	call(state)
+	#call(state)
 	moving(delta)
 	
 	#if !is_nan(SpeedComputed.x) or !is_nan(SpeedComputed.y):
 		#if SpeedComputed.x == 0 or SpeedComputed.y == 0:	
 			#find_path()
-			
+
+func move_to_target(delta, tar):
+	pass
+
 func set_path(_path: PackedVector2Array):
 	path = _path
 	if path != bypass or path != path_straight:
@@ -112,11 +129,13 @@ func moving(delta):
 		animates_unit(velocity)
 	else:
 		animates_unit_idle(velocity)
+	
+	
 	#print("s = ", SpeedComputed)
 	#print("d = ", norm_direction)
 	#print("v = ", velocity)
 	
-	search_for_obstacles()
+	#search_for_obstacles()
 	
 func search_for_obstacles():
 	#print(rayNE.is_colliding(), raySE.is_colliding())
@@ -126,7 +145,7 @@ func search_for_obstacles():
 		bypass.append(Vector2(position.x-5, position.y+1))
 		if targetFinal != null:
 			bypass.append(targetFinal)
-		print(bypass)
+		#print(bypass)
 		set_path(bypass)
 	if rayNE.is_colliding() and get_animation_direction_8dir(velocity) == "top":
 		bypass.clear()
@@ -134,7 +153,7 @@ func search_for_obstacles():
 		bypass.append(Vector2(position.x-15, position.y+1))
 		if targetFinal != null:
 			bypass.append(targetFinal)
-		print(bypass)
+		#print(bypass)
 		set_path(bypass)
 	if rayNE.is_colliding() and get_animation_direction_8dir(velocity) == "left":
 		bypass.clear()
@@ -142,7 +161,7 @@ func search_for_obstacles():
 		bypass.append(Vector2(position.x-15, position.y+1))
 		if targetFinal != null:
 			bypass.append(targetFinal)
-		print(bypass)
+		#print(bypass)
 		set_path(bypass)
 	if rayE.is_colliding() and get_animation_direction_8dir(velocity) == "top-right":
 		bypass.clear()
@@ -150,7 +169,7 @@ func search_for_obstacles():
 		bypass.append(Vector2(position.x-1, position.y-15))
 		if targetFinal != null:
 			bypass.append(targetFinal)
-		print(bypass)
+		#print(bypass)
 		set_path(bypass)
 	
 
@@ -162,12 +181,20 @@ func _move_along_path(delta):
 		var dist_to_next_point = position.distance_to(next_point)
 		if distance <= dist_to_next_point and distance >= 0.0:
 			velocity = position.direction_to(next_point).normalized() * Speed
+			restart_stopTimer()
 			move_and_slide()
 			break
 		distance -= dist_to_next_point
 		velocity = position.direction_to(next_point).normalized() * Speed
+		restart_stopTimer()
 		move_and_slide()
 		path = path.slice(1)
+		
+func restart_stopTimer():
+	if get_slide_collision_count() and stopTimer.is_stopped():
+		stopTimer.start()
+		last_position = position
+		last_distance_to_target = last_position.distance_to(target)
 		
 func _rotate_to_path(point):
 	var dir_to_point = position.direction_to(point).normalized() * Speed
@@ -228,3 +255,11 @@ func animates_unit_idle(direction):
 
 func _on_unit_input_event(viewport, event, shape_idx):
 	pass # Replace with function body.
+
+
+func _on_stop_timer_timeout():
+	if get_slide_collision_count():
+		if last_distance_to_target < position.distance_to(target) + move_treshold:
+			target = position
+			path.remove_at(0)
+			

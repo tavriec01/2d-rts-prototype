@@ -8,7 +8,7 @@ extends Camera2D  #Скрипт привязан к камере
 @export var ZOOM_MIN = 1.2
 @export var ZOOM_MAX = 2.0
 
-var zoomFactor = 1.0
+var zoomFactor = 2.0
 var zoomPos = Vector2()
 var isZooming = false
 

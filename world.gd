@@ -43,11 +43,12 @@ func _on_area_selected(object):
 func get_units_in_area(area):
 	var selectedUnits = []
 	for unit in units:
-		if unit.position.x > area[0].x and unit.position.x < area[1].x:
-			if unit.position.y > area[0].y and unit.position.y < area[1].y:
-				selectedUnits.append(unit)
-		elif unit.position.x - 6 < area[0].x and unit.position.x + 6 > area[0].x:
-			if unit.position.y - 7 < area[0].y and unit.position.y + 7 > area[0].y:
-				selectedUnits.append(unit)
+		if unit.unit_owner == 0:
+			if unit.position.x > area[0].x and unit.position.x < area[1].x:
+				if unit.position.y > area[0].y and unit.position.y < area[1].y:
+					selectedUnits.append(unit)
+			elif unit.position.x - 6 < area[0].x and unit.position.x + 6 > area[0].x:
+				if unit.position.y - 7 < area[0].y and unit.position.y + 7 > area[0].y:
+					selectedUnits.append(unit)
 	return selectedUnits
 	

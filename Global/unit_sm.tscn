@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://douchdm2flran"]
+
+[ext_resource type="Script" path="res://Global/unit_sm.gd" id="1_cvujo"]
+
+[node name="UnitSM" type="Node"]
+script = ExtResource("1_cvujo")
