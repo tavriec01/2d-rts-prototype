@@ -1,15 +1,15 @@
-[gd_scene load_steps=17 format=3 uid="uid://ckuhr1f13g1q"]
+[gd_scene load_steps=18 format=3 uid="uid://ckuhr1f13g1q"]
 
 [ext_resource type="Script" path="res://unit/Unit.gd" id="1_ppg3l"]
 [ext_resource type="Material" uid="uid://c08fqfh0m5fe2" path="res://Materials/unit_shader_material.tres" id="1_vqegu"]
 [ext_resource type="Texture2D" uid="uid://c8b1mobskyhll" path="res://assets/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="2_sxl4r"]
 [ext_resource type="PackedScene" uid="uid://douchdm2flran" path="res://Global/unit_sm.tscn" id="4_g663q"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hg031"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xvx88"]
 radius = 2.0
 height = 6.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cyktv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg65p"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 1
 border_width_top = 1
@@ -18,7 +18,7 @@ border_width_bottom = 1
 border_color = Color(1, 1, 0, 0.686275)
 border_blend = true
 
-[sub_resource type="Animation" id="Animation_7bvek"]
+[sub_resource type="Animation" id="Animation_cxyvq"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -33,7 +33,7 @@ tracks/0/keys = {
 "values": [1]
 }
 
-[sub_resource type="Animation" id="Animation_w4qnd"]
+[sub_resource type="Animation" id="Animation_f68co"]
 resource_name = "down_idle"
 length = 1.6
 loop_mode = 1
@@ -50,7 +50,7 @@ tracks/0/keys = {
 "values": [1, 0]
 }
 
-[sub_resource type="Animation" id="Animation_0mggk"]
+[sub_resource type="Animation" id="Animation_yrrpy"]
 resource_name = "down_walk"
 length = 0.4
 loop_mode = 1
@@ -67,7 +67,7 @@ tracks/0/keys = {
 "values": [1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_k6dwf"]
+[sub_resource type="Animation" id="Animation_7fvbb"]
 resource_name = "left_idle"
 length = 1.6
 loop_mode = 1
@@ -84,7 +84,7 @@ tracks/0/keys = {
 "values": [16, 15]
 }
 
-[sub_resource type="Animation" id="Animation_15m58"]
+[sub_resource type="Animation" id="Animation_nu0ro"]
 resource_name = "left_walk"
 length = 0.4
 loop_mode = 1
@@ -101,7 +101,7 @@ tracks/0/keys = {
 "values": [16, 17, 18, 19]
 }
 
-[sub_resource type="Animation" id="Animation_4whof"]
+[sub_resource type="Animation" id="Animation_abq65"]
 resource_name = "right_idle"
 length = 1.6
 loop_mode = 1
@@ -118,7 +118,7 @@ tracks/0/keys = {
 "values": [11, 10]
 }
 
-[sub_resource type="Animation" id="Animation_05dlb"]
+[sub_resource type="Animation" id="Animation_oddex"]
 resource_name = "right_walk"
 length = 0.4
 loop_mode = 1
@@ -135,7 +135,7 @@ tracks/0/keys = {
 "values": [11, 12, 13, 14]
 }
 
-[sub_resource type="Animation" id="Animation_h8upo"]
+[sub_resource type="Animation" id="Animation_bflj5"]
 resource_name = "top_idle"
 length = 1.6
 loop_mode = 1
@@ -152,7 +152,7 @@ tracks/0/keys = {
 "values": [6, 5]
 }
 
-[sub_resource type="Animation" id="Animation_om673"]
+[sub_resource type="Animation" id="Animation_7mhjd"]
 resource_name = "top_walk"
 length = 0.4
 loop_mode = 1
@@ -169,18 +169,21 @@ tracks/0/keys = {
 "values": [6, 7, 6, 9]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gijxo"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mwo7k"]
 _data = {
-"RESET": SubResource("Animation_7bvek"),
-"down_idle": SubResource("Animation_w4qnd"),
-"down_walk": SubResource("Animation_0mggk"),
-"left_idle": SubResource("Animation_k6dwf"),
-"left_walk": SubResource("Animation_15m58"),
-"right_idle": SubResource("Animation_4whof"),
-"right_walk": SubResource("Animation_05dlb"),
-"top_idle": SubResource("Animation_h8upo"),
-"top_walk": SubResource("Animation_om673")
+"RESET": SubResource("Animation_cxyvq"),
+"down_idle": SubResource("Animation_f68co"),
+"down_walk": SubResource("Animation_yrrpy"),
+"left_idle": SubResource("Animation_7fvbb"),
+"left_walk": SubResource("Animation_nu0ro"),
+"right_idle": SubResource("Animation_abq65"),
+"right_walk": SubResource("Animation_oddex"),
+"top_idle": SubResource("Animation_bflj5"),
+"top_walk": SubResource("Animation_7mhjd")
 }
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y5vva"]
+radius = 75.0
 
 [node name="Unit" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -193,7 +196,7 @@ unit_owner = 1
 visible = false
 position = Vector2(0, 5)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_hg031")
+shape = SubResource("CapsuleShape2D_xvx88")
 
 [node name="Box" type="Panel" parent="."]
 visible = false
@@ -201,7 +204,7 @@ offset_left = -6.0
 offset_top = -7.0
 offset_right = 6.0
 offset_bottom = 9.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_cyktv")
+theme_override_styles/panel = SubResource("StyleBoxFlat_lg65p")
 metadata/_edit_use_anchors_ = true
 
 [node name="FarmerTemplate" type="Sprite2D" parent="."]
@@ -215,7 +218,7 @@ frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_gijxo")
+"": SubResource("AnimationLibrary_mwo7k")
 }
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -251,5 +254,14 @@ one_shot = true
 
 [node name="UnitSM" parent="." instance=ExtResource("4_g663q")]
 
+[node name="VisionRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionRange"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_y5vva")
+
 [connection signal="input_event" from="." to="." method="_on_unit_input_event"]
-[connection signal="timeout" from="StopTimer" to="." method="_on_stop_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="UnitSM" method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="StopTimer" to="UnitSM" method="_on_stop_timer_timeout"]
+[connection signal="body_entered" from="VisionRange" to="." method="_on_vision_range_body_entered"]
+[connection signal="body_exited" from="VisionRange" to="." method="_on_vision_range_body_exited"]

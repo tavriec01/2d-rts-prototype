@@ -15,6 +15,8 @@ class_name Unit
 @onready var rayE = get_node("RayE")
 @onready var rayW = get_node("RayW")
 @onready var stopTimer = get_node("StopTimer")
+@onready var state_machine = get_node("UnitSM")
+@onready var coll_shape = get_node("CollisionShape2d")
 
 var _timer = 0
 
@@ -23,7 +25,8 @@ var path_straight = PackedVector2Array()
 var bypass = PackedVector2Array()
 var isFollowCursor = false
 var Speed = 50.0
-@onready var target = position
+@onready var movement_target = position
+var target_max = 1
 var SpeedComputed
 var targetFinal
 var last_direction = Vector2(0, 1)
@@ -41,6 +44,14 @@ var sub_state
 # materials
 var enemy_material = load("res://Materials/unit_shader_material.tres")
 
+# combat
+var attack_range = 20
+var health = 50
+var damage_amount = 20
+var possible_targets = []
+var attack_target = null
+
+# signals
 signal right_clicked
 
 func _ready():
@@ -74,14 +85,28 @@ func _physics_process(delta):
 	_timer += delta
 	
 	#call(state)
-	moving(delta)
-	
+	move_to_target(delta, movement_target)
+	print(get_state())
 	#if !is_nan(SpeedComputed.x) or !is_nan(SpeedComputed.y):
 		#if SpeedComputed.x == 0 or SpeedComputed.y == 0:	
 			#find_path()
 
 func move_to_target(delta, tar):
-	pass
+	if isFollowCursor:
+		if selected:
+			#bypass.clear()
+			tar = get_global_mouse_position()
+			targetFinal = tar
+			#emit_signal("right_clicked", self, targetFinal)
+			#path_straight.append(position)
+			path_straight.remove_at(1)
+			path_straight.append(targetFinal)
+			set_path(path_straight)
+	if !path.is_empty():
+		_move_along_path(delta)
+		animates_unit(velocity)
+	else:
+		animates_unit_idle(velocity)
 
 func set_path(_path: PackedVector2Array):
 	path = _path
@@ -111,32 +136,7 @@ func set_path(_path: PackedVector2Array):
 				for j in count_currY-count_startY-1:
 					if count_startY+j < path.size()-1:
 						path.remove_at(count_startY+j)
-		#print(path)
-	
-func moving(delta):
-	if isFollowCursor:
-		if selected:
-			#bypass.clear()
-			target = get_global_mouse_position()
-			targetFinal = target
-			#emit_signal("right_clicked", self, targetFinal)
-			#path_straight.append(position)
-			path_straight.remove_at(1)
-			path_straight.append(targetFinal)
-			set_path(path_straight)
-	if !path.is_empty():
-		_move_along_path(delta)
-		animates_unit(velocity)
-	else:
-		animates_unit_idle(velocity)
-	
-	
-	#print("s = ", SpeedComputed)
-	#print("d = ", norm_direction)
-	#print("v = ", velocity)
-	
-	#search_for_obstacles()
-	
+
 func search_for_obstacles():
 	#print(rayNE.is_colliding(), raySE.is_colliding())
 	if rayNE.is_colliding() and get_animation_direction_8dir(velocity) == "top-left":
@@ -194,7 +194,7 @@ func restart_stopTimer():
 	if get_slide_collision_count() and stopTimer.is_stopped():
 		stopTimer.start()
 		last_position = position
-		last_distance_to_target = last_position.distance_to(target)
+		last_distance_to_target = last_position.distance_to(movement_target)
 		
 func _rotate_to_path(point):
 	var dir_to_point = position.direction_to(point).normalized() * Speed
@@ -257,9 +257,49 @@ func _on_unit_input_event(viewport, event, shape_idx):
 	pass # Replace with function body.
 
 
-func _on_stop_timer_timeout():
-	if get_slide_collision_count():
-		if last_distance_to_target < position.distance_to(target) + move_treshold:
-			target = position
-			path.remove_at(0)
-			
+func _on_vision_range_body_entered(body):
+	if body.is_in_group("units"):
+		if body.unit_owner != unit_owner:
+			possible_targets.append(body)
+
+
+func _on_vision_range_body_exited(body):
+	if possible_targets.has(body):
+		possible_targets.erase(body)
+
+func _compare_distance(target_a, target_b):
+	if position.distance_to(target_a.position) < position.distance_to(target_b.position):
+		return true
+	else:
+		return false
+
+func closest_enemy() -> Unit:
+	if possible_targets.size() > 0:
+		possible_targets.sort_custom(_compare_distance)
+		return possible_targets[0]
+	else:
+		return null
+
+func closest_enemy_within_range() -> Unit:
+	if closest_enemy().position.distance_to(position) < attack_range:
+		return closest_enemy()
+	else:
+		return null
+
+func target_within_range() -> bool:
+	if attack_target.get_ref().position.distance_to(position) < attack_range:
+		return true
+	else:
+		return false
+
+func take_damage(amount) -> bool:
+	health -= amount
+	if health <= 0:
+		state_machine.died()
+		coll_shape.disabled = true
+		return false
+	else:
+		return true
+
+func get_state():
+	return state_machine.state
