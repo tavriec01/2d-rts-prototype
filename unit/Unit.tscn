@@ -1,15 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://ckuhr1f13g1q"]
+[gd_scene load_steps=19 format=3 uid="uid://b8jeaiw5o6bw1"]
 
 [ext_resource type="Script" path="res://unit/Unit.gd" id="1_ppg3l"]
-[ext_resource type="Material" uid="uid://c08fqfh0m5fe2" path="res://Materials/unit_shader_material.tres" id="1_vqegu"]
+[ext_resource type="Material" path="res://Materials/blue_unit_shader_material.tres" id="1_rus1v"]
+[ext_resource type="Material" uid="uid://7nawm3w7floa" path="res://Materials/red_unit_shader_material.tres" id="1_vh0ca"]
 [ext_resource type="Texture2D" uid="uid://c8b1mobskyhll" path="res://assets/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="2_sxl4r"]
 [ext_resource type="PackedScene" uid="uid://douchdm2flran" path="res://Global/unit_sm.tscn" id="4_g663q"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xvx88"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rs04c"]
 radius = 2.0
 height = 6.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg65p"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ct8w"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 1
 border_width_top = 1
@@ -18,7 +19,7 @@ border_width_bottom = 1
 border_color = Color(1, 1, 0, 0.686275)
 border_blend = true
 
-[sub_resource type="Animation" id="Animation_cxyvq"]
+[sub_resource type="Animation" id="Animation_q41ia"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -33,7 +34,7 @@ tracks/0/keys = {
 "values": [1]
 }
 
-[sub_resource type="Animation" id="Animation_f68co"]
+[sub_resource type="Animation" id="Animation_e7ewj"]
 resource_name = "down_idle"
 length = 1.6
 loop_mode = 1
@@ -50,7 +51,7 @@ tracks/0/keys = {
 "values": [1, 0]
 }
 
-[sub_resource type="Animation" id="Animation_yrrpy"]
+[sub_resource type="Animation" id="Animation_ijpvr"]
 resource_name = "down_walk"
 length = 0.4
 loop_mode = 1
@@ -67,7 +68,7 @@ tracks/0/keys = {
 "values": [1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_7fvbb"]
+[sub_resource type="Animation" id="Animation_5bwmw"]
 resource_name = "left_idle"
 length = 1.6
 loop_mode = 1
@@ -84,7 +85,7 @@ tracks/0/keys = {
 "values": [16, 15]
 }
 
-[sub_resource type="Animation" id="Animation_nu0ro"]
+[sub_resource type="Animation" id="Animation_6o47l"]
 resource_name = "left_walk"
 length = 0.4
 loop_mode = 1
@@ -101,7 +102,7 @@ tracks/0/keys = {
 "values": [16, 17, 18, 19]
 }
 
-[sub_resource type="Animation" id="Animation_abq65"]
+[sub_resource type="Animation" id="Animation_g54ap"]
 resource_name = "right_idle"
 length = 1.6
 loop_mode = 1
@@ -118,7 +119,7 @@ tracks/0/keys = {
 "values": [11, 10]
 }
 
-[sub_resource type="Animation" id="Animation_oddex"]
+[sub_resource type="Animation" id="Animation_pecho"]
 resource_name = "right_walk"
 length = 0.4
 loop_mode = 1
@@ -135,7 +136,7 @@ tracks/0/keys = {
 "values": [11, 12, 13, 14]
 }
 
-[sub_resource type="Animation" id="Animation_bflj5"]
+[sub_resource type="Animation" id="Animation_5d812"]
 resource_name = "top_idle"
 length = 1.6
 loop_mode = 1
@@ -152,7 +153,7 @@ tracks/0/keys = {
 "values": [6, 5]
 }
 
-[sub_resource type="Animation" id="Animation_7mhjd"]
+[sub_resource type="Animation" id="Animation_st5l3"]
 resource_name = "top_walk"
 length = 0.4
 loop_mode = 1
@@ -169,34 +170,33 @@ tracks/0/keys = {
 "values": [6, 7, 6, 9]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mwo7k"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_heupw"]
 _data = {
-"RESET": SubResource("Animation_cxyvq"),
-"down_idle": SubResource("Animation_f68co"),
-"down_walk": SubResource("Animation_yrrpy"),
-"left_idle": SubResource("Animation_7fvbb"),
-"left_walk": SubResource("Animation_nu0ro"),
-"right_idle": SubResource("Animation_abq65"),
-"right_walk": SubResource("Animation_oddex"),
-"top_idle": SubResource("Animation_bflj5"),
-"top_walk": SubResource("Animation_7mhjd")
+"RESET": SubResource("Animation_q41ia"),
+"down_idle": SubResource("Animation_e7ewj"),
+"down_walk": SubResource("Animation_ijpvr"),
+"left_idle": SubResource("Animation_5bwmw"),
+"left_walk": SubResource("Animation_6o47l"),
+"right_idle": SubResource("Animation_g54ap"),
+"right_walk": SubResource("Animation_pecho"),
+"top_idle": SubResource("Animation_5d812"),
+"top_walk": SubResource("Animation_st5l3")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_y5vva"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_40vbv"]
 radius = 75.0
 
 [node name="Unit" type="CharacterBody2D"]
 y_sort_enabled = true
-material = ExtResource("1_vqegu")
+material = ExtResource("1_vh0ca")
 use_parent_material = true
 script = ExtResource("1_ppg3l")
-unit_owner = 1
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0, 5)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_xvx88")
+shape = SubResource("CapsuleShape2D_rs04c")
 
 [node name="Box" type="Panel" parent="."]
 visible = false
@@ -204,11 +204,11 @@ offset_left = -6.0
 offset_top = -7.0
 offset_right = 6.0
 offset_bottom = 9.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_lg65p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ct8w")
 metadata/_edit_use_anchors_ = true
 
 [node name="FarmerTemplate" type="Sprite2D" parent="."]
-material = ExtResource("1_vqegu")
+material = ExtResource("1_rus1v")
 use_parent_material = true
 position = Vector2(0, 1)
 texture = ExtResource("2_sxl4r")
@@ -218,33 +218,33 @@ frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_mwo7k")
+"": SubResource("AnimationLibrary_heupw")
 }
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Detector" type="Node2D" parent="."]
 visible = false
 
-[node name="RaySE" type="RayCast2D" parent="Node2D"]
+[node name="RaySE" type="RayCast2D" parent="Detector"]
 position = Vector2(0, 6)
 target_position = Vector2(4, 4)
 
-[node name="RayNW" type="RayCast2D" parent="Node2D"]
+[node name="RayNW" type="RayCast2D" parent="Detector"]
 position = Vector2(0, 6)
 target_position = Vector2(-4, -4)
 
-[node name="RaySW" type="RayCast2D" parent="Node2D"]
+[node name="RaySW" type="RayCast2D" parent="Detector"]
 position = Vector2(0, 6)
 target_position = Vector2(-4, 4)
 
-[node name="RayW" type="RayCast2D" parent="Node2D"]
+[node name="RayW" type="RayCast2D" parent="Detector"]
 position = Vector2(0, 6)
 target_position = Vector2(-7, 0)
 
-[node name="RayNE" type="RayCast2D" parent="Node2D"]
+[node name="RayNE" type="RayCast2D" parent="Detector"]
 position = Vector2(0, 6)
 target_position = Vector2(4, -4)
 
-[node name="RayE" type="RayCast2D" parent="Node2D"]
+[node name="RayE" type="RayCast2D" parent="Detector"]
 position = Vector2(0, 6)
 target_position = Vector2(7, 0)
 
@@ -258,7 +258,7 @@ one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VisionRange"]
 position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_y5vva")
+shape = SubResource("CircleShape2D_40vbv")
 
 [connection signal="input_event" from="." to="." method="_on_unit_input_event"]
 [connection signal="animation_finished" from="AnimationPlayer" to="UnitSM" method="_on_animation_player_animation_finished"]

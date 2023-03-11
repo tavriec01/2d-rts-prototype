@@ -8,18 +8,18 @@ class_name Unit
 @onready var line = get_tree().get_root().get_node("World/Drawing/Line2D")
 @onready var astar = get_tree().get_root().get_node("World/Astar")
 @onready var worldPath = get_tree().get_root().get_node("World")
-@onready var raySE = get_node("RaySE")
-@onready var raySW = get_node("RaySW")
-@onready var rayNE = get_node("RayNE")
-@onready var rayNW = get_node("RayNW")
-@onready var rayE = get_node("RayE")
-@onready var rayW = get_node("RayW")
+@onready var raySE = get_node("Detector/RaySE")
+@onready var raySW = get_node("Detector/RaySW")
+@onready var rayNE = get_node("Detector/RayNE")
+@onready var rayNW = get_node("Detector/RayNW")
+@onready var rayE = get_node("Detector/RayE")
+@onready var rayW = get_node("Detector/RayW")
 @onready var stopTimer = get_node("StopTimer")
 @onready var state_machine = get_node("UnitSM")
 @onready var coll_shape = get_node("CollisionShape2d")
 
 var _timer = 0
-
+# movement
 var path = PackedVector2Array()
 var path_straight = PackedVector2Array()
 var bypass = PackedVector2Array()
@@ -42,9 +42,17 @@ var state
 var sub_state
 
 # materials
-var enemy_material = load("res://Materials/unit_shader_material.tres")
+var red_material = preload("res://Materials/red_unit_shader_material.tres")
+var blue_material = preload("res://Materials/blue_unit_shader_material.tres")
+#var green_material = preload("res://Materials/unit_shader_material.tres")
+#var violet_material = preload("res://Materials/unit_shader_material.tres")
+#var orange_material = preload("res://Materials/unit_shader_material.tres")
+#var black_material = preload("res://Materials/unit_shader_material.tres")
+#var light_green_material = preload("res://Materials/unit_shader_material.tres")
+#var yellow_material = preload("res://Materials/unit_shader_material.tres")
 
 # combat
+var isEngaging = false
 var attack_range = 20
 var health = 50
 var damage_amount = 20
@@ -56,11 +64,29 @@ signal right_clicked
 
 func _ready():
 	#set_state(state)
-	if unit_owner == 1:
-		material = enemy_material
+	set_owner_material(unit_owner)
 	set_selected(selected)
 	add_to_group("units", true)
 	
+func set_owner_material(owner):
+	if owner == 0:
+		self.set_material(red_material)
+		#print(get_material())
+	if owner == 1:
+		self.set_material(blue_material)
+		#print(get_material())
+	if owner == 2:
+		set_material(blue_material)
+	if owner == 3:
+		set_material(blue_material)
+	if owner == 4:
+		set_material(blue_material)
+	if owner == 5:
+		set_material(blue_material)
+	if owner == 6:
+		set_material(blue_material)
+	if owner == 7:
+		set_material(blue_material)
 
 func set_state(s, sub=""):
 	_timer = 0
@@ -85,13 +111,21 @@ func _physics_process(delta):
 	_timer += delta
 	
 	#call(state)
+	if isFollowCursor:
+		if selected:
+			movement_target = get_global_mouse_position()
 	move_to_target(delta, movement_target)
-	print(get_state())
 	#if !is_nan(SpeedComputed.x) or !is_nan(SpeedComputed.y):
 		#if SpeedComputed.x == 0 or SpeedComputed.y == 0:	
 			#find_path()
 
 func move_to_target(delta, tar):
+	velocity = Vector2.ZERO
+	velocity = position.direction_to(tar) * Speed
+	restart_stopTimer()
+	move_and_slide()
+
+func move_to_target2(delta, tar):
 	if isFollowCursor:
 		if selected:
 			#bypass.clear()
@@ -102,6 +136,12 @@ func move_to_target(delta, tar):
 			path_straight.remove_at(1)
 			path_straight.append(targetFinal)
 			set_path(path_straight)
+	if isEngaging:
+		targetFinal = tar
+		path_straight.remove_at(1)
+		path_straight.append(targetFinal)
+		set_path(path_straight)
+		#print(path_straight)
 	if !path.is_empty():
 		_move_along_path(delta)
 		animates_unit(velocity)
@@ -110,32 +150,33 @@ func move_to_target(delta, tar):
 
 func set_path(_path: PackedVector2Array):
 	path = _path
+	print(path)
 	if path != bypass or path != path_straight:
 		path = path.slice(1)
-	for i in range(path.size()):
-		var count_startX = i
-		var count_currX = i
-		var count_startY = i
-		var count_currY = i
-		#print(path)
-		while count_currX < path.size()-1 and path[count_currX].x == path[count_currX+1].x:
-			#print(path[count_curr])
-			if path[count_currX+1] != null:
-				count_currX+=1
-		if count_currX != count_startX:
-			if count_currX-count_startX > 2:
-				for j in count_currX-count_startX-1:
-					if count_startX+j < path.size()-1:
-						path.remove_at(count_startX+j)
-		while count_currY < path.size()-1 and path[count_currY].y == path[count_currY+1].y:
-			#print(path[count_curr])
-			if path[count_currY+1] != null:
-				count_currY+=1
-		if count_currY != count_startY:
-			if count_currY-count_startY > 2:
-				for j in count_currY-count_startY-1:
-					if count_startY+j < path.size()-1:
-						path.remove_at(count_startY+j)
+		for i in range(path.size()):
+			var count_startX = i
+			var count_currX = i
+			var count_startY = i
+			var count_currY = i
+			#print(path)
+			while count_currX < path.size()-1 and path[count_currX].x == path[count_currX+1].x:
+				#print(path[count_curr])
+				if path[count_currX+1] != null:
+					count_currX+=1
+			if count_currX != count_startX:
+				if count_currX-count_startX > 2:
+					for j in count_currX-count_startX-1:
+						if count_startX+j < path.size()-1:
+							path.remove_at(count_startX+j)
+			while count_currY < path.size()-1 and path[count_currY].y == path[count_currY+1].y:
+				#print(path[count_curr])
+				if path[count_currY+1] != null:
+					count_currY+=1
+			if count_currY != count_startY:
+				if count_currY-count_startY > 2:
+					for j in count_currY-count_startY-1:
+						if count_startY+j < path.size()-1:
+							path.remove_at(count_startY+j)
 
 func search_for_obstacles():
 	#print(rayNE.is_colliding(), raySE.is_colliding())
@@ -194,7 +235,6 @@ func restart_stopTimer():
 	if get_slide_collision_count() and stopTimer.is_stopped():
 		stopTimer.start()
 		last_position = position
-		last_distance_to_target = last_position.distance_to(movement_target)
 		
 func _rotate_to_path(point):
 	var dir_to_point = position.direction_to(point).normalized() * Speed
@@ -273,6 +313,7 @@ func _compare_distance(target_a, target_b):
 	else:
 		return false
 
+
 func closest_enemy() -> Unit:
 	if possible_targets.size() > 0:
 		possible_targets.sort_custom(_compare_distance)
@@ -280,17 +321,23 @@ func closest_enemy() -> Unit:
 	else:
 		return null
 
+
 func closest_enemy_within_range() -> Unit:
-	if closest_enemy().position.distance_to(position) < attack_range:
-		return closest_enemy()
+	if closest_enemy():
+		if closest_enemy().position.distance_to(position) < attack_range:
+			return closest_enemy()
+		else:
+			return null
 	else:
 		return null
+
 
 func target_within_range() -> bool:
 	if attack_target.get_ref().position.distance_to(position) < attack_range:
 		return true
 	else:
 		return false
+
 
 func take_damage(amount) -> bool:
 	health -= amount
@@ -300,6 +347,7 @@ func take_damage(amount) -> bool:
 		return false
 	else:
 		return true
+
 
 func get_state():
 	return state_machine.state

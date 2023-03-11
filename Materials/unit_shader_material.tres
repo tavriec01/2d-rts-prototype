@@ -1,6 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c08fqfh0m5fe2"]
-
-[ext_resource type="Shader" path="res://Materials/unit_shader_material.gdshader" id="1_tvs60"]
-
-[resource]
-shader = ExtResource("1_tvs60")

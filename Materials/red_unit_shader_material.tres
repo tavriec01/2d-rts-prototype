@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://7nawm3w7floa"]
+
+[ext_resource type="Shader" path="res://Materials/unit_shader_material.gdshader" id="1_tvs60"]
+
+[resource]
+shader = ExtResource("1_tvs60")
+shader_parameter/REPLACE_COLOR = Color(0.65098, 0.65098, 0.65098, 1)
+shader_parameter/FACTION_COLOR = Color(1, 0.0901961, 0.0588235, 1)

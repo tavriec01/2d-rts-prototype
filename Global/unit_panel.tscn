@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ct3pddq720amm" path="res://assets/MiniWorldSprites/Buildings/Wood/Chapels.png" id="1_q43cn"]
 [ext_resource type="Texture2D" uid="uid://c8b1mobskyhll" path="res://assets/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="1_shry0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6f5ku"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rad46"]
 bg_color = Color(0, 0, 0, 0)
 border_width_left = 3
 border_width_top = 3
@@ -22,14 +22,14 @@ script = ExtResource("1_eqygr")
 [node name="Panel" type="Panel" parent="."]
 offset_right = 57.0
 offset_bottom = 57.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_6f5ku")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rad46")
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel2" type="Panel" parent="."]
 offset_left = 56.0
 offset_right = 160.0
 offset_bottom = 57.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_6f5ku")
+theme_override_styles/panel = SubResource("StyleBoxFlat_rad46")
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2d" type="Sprite2D" parent="."]

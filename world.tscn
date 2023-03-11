@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bj0ktjgar201n" path="res://UI/UI.tscn" id="1_8fdnv"]
 [ext_resource type="Script" path="res://UI/Camera.gd" id="1_u0wke"]
 [ext_resource type="Texture2D" uid="uid://c6gn4iangb51i" path="res://assets/MiniWorldSprites/Ground/grass-1.png" id="2_gcd5i"]
-[ext_resource type="PackedScene" uid="uid://ckuhr1f13g1q" path="res://unit/Unit.tscn" id="3_c6l8b"]
+[ext_resource type="PackedScene" uid="uid://b8jeaiw5o6bw1" path="res://unit/Unit.tscn" id="3_c6l8b"]
 [ext_resource type="PackedScene" uid="uid://dat0deipcwyih" path="res://World objects/Tree.tscn" id="5_o4sli"]
 [ext_resource type="PackedScene" uid="uid://cp7iilt2q13yn" path="res://buildings/building.tscn" id="7_8yja2"]
 [ext_resource type="PackedScene" uid="uid://b7bk0v4wes310" path="res://buildings/mine.tscn" id="8_pqbp8"]
@@ -51,18 +51,18 @@ script = ExtResource("1_u0wke")
 y_sort_enabled = true
 
 [node name="Unit59" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
-position = Vector2(221, 104)
-unit_owner = 0
+position = Vector2(209, 147)
 
 [node name="Unit60" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
-position = Vector2(452, 225)
+position = Vector2(547, 191)
+unit_owner = 1
 
 [node name="Unit61" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
-position = Vector2(449, 195)
+position = Vector2(521, 219)
+unit_owner = 1
 
 [node name="Unit62" parent="Units" groups=["units"] instance=ExtResource("3_c6l8b")]
-position = Vector2(198, 149)
-unit_owner = 0
+position = Vector2(267, 213)
 
 [node name="Objects" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -80,7 +80,7 @@ position = Vector2(318, 82)
 position = Vector2(436, 121)
 
 [node name="Tree5" parent="Objects" instance=ExtResource("5_o4sli")]
-position = Vector2(436, 121)
+position = Vector2(502, 109)
 
 [node name="Tree2" parent="Objects" instance=ExtResource("5_o4sli")]
 position = Vector2(69, 82)

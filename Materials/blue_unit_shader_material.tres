@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://Materials/unit_shader_material.gdshader" id="1_g2km3"]
+
+[resource]
+shader = ExtResource("1_g2km3")
+shader_parameter/REPLACE_COLOR = Color(0.65098, 0.65098, 0.65098, 1)
+shader_parameter/FACTION_COLOR = Color(0.117647, 0.109804, 1, 1)

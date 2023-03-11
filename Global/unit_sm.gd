@@ -6,7 +6,7 @@ enum Commands {
 	ATTACK_MOVE, 
 	HOLD
 }
-var command = Commands.NONE
+var command : int = Commands.NONE
 
 enum CommandMods {
 	NONE,
@@ -31,7 +31,6 @@ func _input(event):
 			command = Commands.HOLD
 			set_state(states.idle)
 		if Input.is_action_just_released("RightClick"):
-			parent.movement_target = event.position
 			set_state(states.moving)
 			match command_mod:
 				CommandMods.NONE:
@@ -47,82 +46,71 @@ func _state_logic(delta):
 			parent.move_to_target(delta, parent.movement_target)
 		states.engaging:
 			if parent.attack_target.get_ref():
+				parent.isEngaging = true
 				parent.move_to_target(delta, parent.attack_target.get_ref().position)
 			else:
+				parent.isEngaging = false
 				set_state(states.idle)
 		states.attacking:
 			pass
 		states.dying:
 			pass
 
-func _enter_state(new_state, old_state):
-	print(new_state)
+func _enter_state(new_state, previous_state):
 	match state:
 		states.idle:
-			if parent.facing_forward:
-				parent.sprite.frames = parent.idle_forward_frames
-			else:
-				parent.sprite.frames = parent.idle_back_frames
+			pass
 		states.moving:
-			if parent.position.x < parent.movement_target.x:
-				parent.sprite.flip_h = false
-			elif parent.position.x > parent.movement_target.x:
-				parent.sprite.flip_h = true
-			if parent.position.y < parent.movement_target.y:
-				parent.sprite.frames = parent.walking_forward_frames
-				parent.facing_forward = true
-			elif parent.position.y > parent.movement_target.y:
-				parent.sprite.frames = parent.walking_back_frames
-				parent.facing_forward = false
+			pass
 		states.engaging:
-			if parent.position.x < parent.attack_target.get_ref().position.x:
-				parent.sprite.flip_h = false
-			elif parent.position.x > parent.attack_target.get_ref().position.x:
-				parent.sprite.flip_h = true
-			if parent.position.y < parent.attack_target.get_ref().position.y:
-				parent.sprite.frames = parent.walking_forward_frames
-				parent.facing_forward = true
-			elif parent.position.y > parent.attack_target.get_ref().position.y:
-				parent.sprite.frames = parent.walking_back_frames
-				parent.facing_forward = false
+			pass
 		states.attacking:
-			if parent.facing_forward:
-				parent.sprite.frames = parent.attack_forward_frames
-			else:
-				parent.sprite.frames = parent.attack_back_frames
+			pass
 		states.dying:
-			if parent.facing_forward:
-				parent.sprite.frames = parent.die_forward_frames
-			else:
-				parent.sprite.frames = parent.die_back_frames
+			pass
 
-func _exit_state(old_state, new_state):
-	match old_state:
+func _exit_state(previous_state, new_state):
+	match previous_state:
 		states.attacking:
 			if new_state == states.idle:
 				parent.attack_target = null
 		states.moving:
 			if new_state != states.moving and command != Commands.ATTACK_MOVE:
-				parent.movement_target = parent.positionS
+				parent.movement_target = parent.position
+				parent.path.remove_at(0)
 
 func _get_transition(delta):
 	match state:
 		states.idle:
-			if parent.closest_enemy() != null:
-				parent.attack_target = parent.closest_enemy()
-				set_state(states.engaging)
+			match command:
+				Commands.HOLD:
+					if parent.closest_enemy_within_range() != null:
+						parent.attack_target = weakref(parent.closest_enemy_within_range())
+						set_state(states.attacking)
+				Commands.ATTACK_MOVE:
+					set_state(states.moving)
+				Commands.NONE:
+					if parent.closest_enemy() != null:
+						parent.attack_target = weakref(parent.closest_enemy())
+						set_state(states.engaging)
 		states.moving:
+			if (command == Commands.ATTACK_MOVE):
+				if parent.closest_enemy() != null:
+					parent.attack_target = weakref(parent.closest_enemy())
+					set_state(states.engaging)
 			if parent.position.distance_to(parent.movement_target) < parent.target_max:
 				parent.movement_target = parent.position
+				parent.path.remove_at(0)
 				set_state(states.idle)
+				command = Commands.NONE
 		states.engaging:
 			if parent.closest_enemy_within_range() != null:
 				parent.attack_target = weakref(parent.closest_enemy())
-				if parent.attack_target.get_ref():
-					parent.attack_target.get_ref().take_damage()
-				set_state(states.engaging)
+				set_state(states.attacking)
 		states.attacking:
-			pass
+			if !parent.attack_target.get_ref():
+				set_state(states.idle)
+				parent.attack_target = null
 		states.dying:
 			pass
 
@@ -134,7 +122,7 @@ func _on_stop_timer_timeout():
 		if parent.last_distance_to_target < parent.position.distance_to(parent.movement_target) + parent.move_treshold:
 			parent.movement_target = parent.position
 			parent.path.remove_at(0)
-			set_state("idle")
+			set_state(states.idle)
 
 
 func _on_animation_player_animation_finished(anim_name):

@@ -1,15 +1,13 @@
 shader_type canvas_item;
 
+uniform vec4 REPLACE_COLOR : source_color;
+uniform vec4 FACTION_COLOR : source_color;
+
 void fragment() {
-    COLOR = texture(TEXTURE, UV); // Get pixel color from the image texture
-    float grey = .21 * COLOR.r + .71 * COLOR.g + .07 * COLOR.b;
-    COLOR.rgb = vec3(grey); // Change the color value
-}
-	/*COLOR = texture(TEXTURE, UV);
-	vec4 curr_col = texture(TEXTURE, UV);
-	if (curr_col == vec4(166.0/255.0, 166.0/255.0, 166.0/255.0, 1)) {
-		COLOR == vec4(0.0/255.0, 77.0/255.0, 255.0/255.0, 1);
+	vec4 curr_color = texture(TEXTURE, UV);
+	if (curr_color == REPLACE_COLOR){
+		COLOR = FACTION_COLOR;
 	} else {
-		COLOR = curr_col;
+		COLOR = curr_color;
 	}
-}*/
+}
